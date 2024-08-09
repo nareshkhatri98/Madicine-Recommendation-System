@@ -2,6 +2,10 @@ from flask import Flask, request, render_template, jsonify  # Import jsonify
 import numpy as np
 import pandas as pd
 import pickle
+import warnings
+from sklearn.exceptions import DataConversionWarning
+
+warnings.filterwarnings(action='ignore', category=DataConversionWarning)
 
 # Flask app
 app = Flask(__name__)
@@ -62,15 +66,7 @@ def home():
         else:
             text_symptoms = []
 
-        # Get symptoms from voice input
-        voice_symptoms = request.form.get('voice_symptoms')
-        if voice_symptoms:
-            voice_symptoms = [s.strip() for s in voice_symptoms.split(',')]
-        else:
-            voice_symptoms = []
-
-        # Merge both lists
-        all_symptoms = text_symptoms + voice_symptoms
+        all_symptoms = text_symptoms
 
         if not all_symptoms or all(symptom == "" for symptom in all_symptoms):
             message = "Please select or enter symptoms"
