@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+*{
+    font-family: "Roboto", sans-serif;
+    margin: 0; padding: 0;
+    text-decoration: none;
+    text-transform: capitalize;
+    outline: none;
+    box-sizing: border-box;
+    transition: all linear .2s;
+  }
+
+form {
+    width: 28%;
+    margin:  auto;
+    margin-top: -100px;
+    padding-top: 150px;
+  }
+  .bg {
+    background-color: #ffeadd;
+  }
+  .btn-color {
+    background-color: #ff6666;
+    border: none;
+  }
+
+  /* Styling for Home Section */
+.home {
+    background-color: #f8f9fa; /* Light background color */
+    padding: 60px 0; /* Vertical padding for spacing */
+}
+
+.home h1 {
+    font-size: 2.5rem;
+    color: #333;
+}
+
+.home h1 span {
+    color: #007bff; /* Highlight color for "Stay" */
+}
+
+.home p {
+    font-size: 1.25rem;
+    color: #666;
+    margin-top: 20px;
+}
+
+.home .images img {
+    max-width: 100%; /* Make sure the image doesn't overflow */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px; /* Add rounded corners */
+}
+
+.home .content {
+    text-align: left;
+}
+
+.home .btn-primary {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.home .btn-primary:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+/* Media Query for responsiveness */
+@media (max-width: 768px) {
+    .home .row {
+        flex-direction: column; /* Stack the image and content on smaller screens */
+        text-align: center; /* Center the content */
+    }
+
+    .home .content {
+        margin-top: 30px;
+    }
+
+    .home .images img {
+        width: 100%; /* Make image take full width on smaller screens */
+    }
+}

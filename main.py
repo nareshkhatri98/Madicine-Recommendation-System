@@ -52,41 +52,53 @@ def get_predicted_value(patient_symptoms):
     return diseases_list[svc.predict([input_vector])[0]]
 
 # Routes
+
+@app.route("/home")
+def HomePage():
+    return render_template('home.html')
+
+@app.route("/login")
+def LoginPage():
+    return render_template('login.html')
+
+@app.route("/register")
+def RegisterPage():
+    return render_template('register.html')
+
 @app.route("/")
 def index():
     return render_template("index.html")
+@app.route('/predict', methods=['POST'])
+def predict():
+    symptoms = request.form.getlist('symptoms[]')
+    
+    # Ensure there are at least three unique symptoms
+    unique_symptoms = set(symptoms)
+    if len(unique_symptoms) < 3:
+        return render_template(
+            'index.html', message="Please enter at least three unique symptoms for accurate prediction."
+        )
+    
+    input_vector = np.zeros(len(symptoms_dict))
+    for symptom in unique_symptoms:
+        if symptom in symptoms_dict:
+            input_vector[symptoms_dict[symptom]] = 1
+    input_vector = input_vector.reshape(1, -1)
 
-@app.route('/predict', methods=['GET', 'POST'])
-def home():
-    if request.method == 'POST':
-        # Get symptoms from text input
-        text_symptoms = request.form.get('text_symptoms')
-        if text_symptoms:
-            text_symptoms = [s.strip() for s in text_symptoms.split(',')]
-        else:
-            text_symptoms = []
-
-        all_symptoms = text_symptoms
-
-        if not all_symptoms or all(symptom == "" for symptom in all_symptoms):
-            message = "Please select or enter symptoms"
-            return render_template('index.html', message=message, symptoms_list=symptoms_dict.keys())
+    try:
+        # Make prediction and map it to the disease name
+        disease_index = svc.predict(input_vector)[0]
+        disease_name = diseases_list[disease_index]
+        dis_des, my_precautions, medications, my_diet, workout = helper(disease_name)
         
-        # Remove any empty strings from the list
-        all_symptoms = [symptom for symptom in all_symptoms if symptom]
+        return render_template(
+            'index.html', predicted_disease=disease_name, dis_des=dis_des,
+            my_precautions=my_precautions, medications=medications, my_diet=my_diet, workout=workout
+        )
+    except Exception as e:
+        return render_template('index.html', message="An error occurred: " + str(e))
 
-        predicted_disease = get_predicted_value(all_symptoms)
-        dis_des, precautions, medications, rec_diet, workout = helper(predicted_disease)
 
-        my_precautions = []
-        for i in precautions[0]:
-            my_precautions.append(i)
-
-        return render_template('index.html', predicted_disease=predicted_disease, dis_des=dis_des,
-                               my_precautions=my_precautions, medications=medications, my_diet=rec_diet,
-                               workout=workout, symptoms_list=symptoms_dict.keys())
-
-    return render_template('index.html', symptoms_list=symptoms_dict.keys())
 
 if __name__ == '__main__':
     app.run(debug=True)

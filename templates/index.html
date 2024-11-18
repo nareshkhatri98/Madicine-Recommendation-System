@@ -41,44 +41,41 @@
         width: 40%;
       "
     >
-      <form action="/predict" method="post">
-        <div class="form-group font-weight-bold">
-          <label
-            for="text_symptoms"
-            style="
-              color: black;
-              font-size: 20px;
-              font-weight: 500;
-              padding: 5px;
-            "
-            >Enter Your Symptoms:</label
-          >
+    <form action="/predict" method="post">
+      <div class="form-group font-weight-bold">
+        <label for="text_symptoms" style="color: black; font-size: 20px; font-weight: 500; padding: 5px;">
+          Enter Your Symptoms:
+        </label>
+    
+        <!-- Container for dynamic symptom input fields -->
+        <div id="symptoms-container">
           <input
             type="text"
-            class="form-control p-3 border border-dark"
-            id="text_symptoms"
-            name="text_symptoms"
-            placeholder="e.g., itching, sneezing, headache"
+            class="form-control p-3 border border-dark my-2"
+            name="symptoms[]"
+            placeholder="Symptom 1 (e.g., itching)"
           />
-         
         </div>
-
-        <!-- Display the transcribed text here -->
-        <div name="mysysms" id="transcription"></div>
-
-        {% if message %}
-        <p style="color: red">{{ message }}</p>
-        {% endif %}
-        <br />
-
-        <button
-          type="submit"
-          class="btn btn-danger btn-lg p-2"
-          style="width: 100%; padding: 5px; margin-bottom: 5px"
-        >
-          Predict
+    
+        <!-- Button to add new symptom input fields -->
+        <button type="button" class="btn btn-secondary my-2" onclick="addSymptomField()">
+          Add Another Symptom
         </button>
-      </form>
+    
+      </div>
+    
+      <!-- Display the transcribed text here -->
+      <div name="mysysms" id="transcription"></div>
+    
+      {% if message %}
+      <p style="color: red">{{ message }}</p>
+      {% endif %}
+      <br />
+    
+      <button type="submit" class="btn btn-danger btn-lg p-2" style="width: 100%; padding: 5px; margin-bottom: 5px">
+        Predict
+      </button>
+    </form>
     </div>
 
    
@@ -339,5 +336,22 @@
       integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
       crossorigin="anonymous"
     ></script>
+    <script>
+      // JavaScript function to add a new symptom input field
+      function addSymptomField() {
+        const container = document.getElementById('symptoms-container');
+        const symptomCount = container.getElementsByTagName('input').length + 1;
+    
+        // Create a new input element for the next symptom
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.name = 'symptoms[]';
+        input.className = 'form-control p-3 border border-dark my-2';
+        input.placeholder = `Symptom ${symptomCount} (e.g., sneezing)`;
+    
+        // Append the new input field to the container
+        container.appendChild(input);
+      }
+    </script>
   </body>
 </html>
