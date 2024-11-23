@@ -53,18 +53,6 @@ def get_predicted_value(patient_symptoms):
 
 # Routes
 
-@app.route("/home")
-def HomePage():
-    return render_template('home.html')
-
-@app.route("/login")
-def LoginPage():
-    return render_template('login.html')
-
-@app.route("/register")
-def RegisterPage():
-    return render_template('register.html')
-
 @app.route("/")
 def index():
     return render_template("index.html")

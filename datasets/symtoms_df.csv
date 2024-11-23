@@ -4565,7 +4565,7 @@
 4563,Cervical spondylosis, back_pain, weakness_in_limbs, neck_pain, dizziness
 4564,Paralysis (brain hemorrhage), vomiting, headache, weakness_of_one_body_side, altered_sensorium
 4565,Jaundice,itching, vomiting, fatigue, weight_loss
-4566,Malaria, chills, vomiting, high_fever, sweating
+4566,Malaria, chills, vomiting, high_fever, sweating    
 4567,Chicken pox,itching, skin_rash, fatigue, lethargy
 4568,Dengue, skin_rash, chills, joint_pain, vomiting
 4569,Typhoid, chills, vomiting, fatigue, high_fever
